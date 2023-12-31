@@ -1,36 +1,49 @@
 class Client {
-    validateName(name) {
-        return name && name.trim() !== ''
+  id;
+  firstName;
+  lastName;
+
+  static create(firstName, lastName) {
+    if (!this.validate(firstName) || !this.validate(lastName)) {
+      throw new Error("First and last name are required");
     }
 
-    static createClient(firstName, lastName) {
-        const client = new Client()
-        client.create(firstName, lastName)
-        return client
+    const client = new Client();
+    client.firstName = firstName;
+    client.lastName = lastName;
+
+    return client;
+  }
+
+  static validate(value) {
+    return value && value.trim() !== "";
+  }
+
+  updateFirstName(firstName) {
+    if (!Client.validate(firstName)) {
+      throw new Error("Invalid first name");
     }
 
-    create(firstName, lastName) {
-        let error
-        if (!this.validateName(firstName)) {
-            error = 'Invalid first name'
-        }
+    this.firstName = firstName;
+  }
 
-        if (!this.validateName(lastName)) {
-            if (error) {
-                error += ' and last name'
-            }
-            else {
-                error = 'Invalid last name'
-            }
-        }
-
-        if (error) {
-            throw new Error(error)
-        }
-    
-        this.firstName = firstName
-        this.lastName = lastName
+  updateLastName(lastName) {
+    if (!Client.validate(lastName)) {
+      throw new Error("Invalid last name");
     }
+
+    this.lastName = lastName;
+  }
+
+  static updateDetails(firstName, lastName) {
+    if (firstName) {
+      this.updateFirstName(firstName);
+    }
+
+    if (lastName) {
+      this.updateLastName(lastName);
+    }
+  }
 }
 
 export default Client;
