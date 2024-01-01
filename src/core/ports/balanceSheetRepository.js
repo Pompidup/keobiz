@@ -10,6 +10,10 @@ class BalanceSheetRepository {
   async getBalanceSheets() {
     throw new Error("Not implemented");
   }
+
+  async findByClientId(clientId) {
+    throw new Error("Not implemented");
+  }
 }
 
 export default BalanceSheetRepository;
