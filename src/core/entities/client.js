@@ -34,16 +34,6 @@ class Client {
 
     this.lastName = lastName;
   }
-
-  static updateDetails(firstName, lastName) {
-    if (firstName) {
-      this.updateFirstName(firstName);
-    }
-
-    if (lastName) {
-      this.updateLastName(lastName);
-    }
-  }
 }
 
 export default Client;
