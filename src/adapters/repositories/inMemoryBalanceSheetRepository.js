@@ -34,6 +34,18 @@ class InMemoryBalanceSheetRepository extends BalanceSheetRepository {
 
     return BalanceSheet.create(balanceSheetData);
   }
+
+  async findByClientId(clientId) {
+    let balanceSheets = [];
+    for (const balanceSheet of this.balanceSheets) {
+      if (balanceSheet.clientId === clientId) {
+        let balanceSheetEntity = BalanceSheet.create(balanceSheet);
+        balanceSheets.push(balanceSheetEntity);
+      }
+    }
+
+    return balanceSheets;
+  }
 }
 
 export default InMemoryBalanceSheetRepository;
