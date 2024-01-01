@@ -35,6 +35,14 @@ class BalanceSheet {
   static validateResult(value) {
     return typeof value === "number";
   }
+
+  updateResult(result) {
+    if (!BalanceSheet.validateResult(result)) {
+      throw new Error("Invalid result");
+    }
+
+    this.result = result;
+  }
 }
 
 export default BalanceSheet;
