@@ -8,6 +8,15 @@ class InMemoryBalanceSheetRepository extends BalanceSheetRepository {
   }
 
   async save(balanceSheet) {
+    const index = this.balanceSheets.findIndex(
+      (b) =>
+        b.year === balanceSheet.year && b.clientId === balanceSheet.clientId
+    );
+    if (index !== -1) {
+      this.balanceSheets[index] = balanceSheet;
+      return;
+    }
+
     this.balanceSheets.push({
       ...balanceSheet,
     });
