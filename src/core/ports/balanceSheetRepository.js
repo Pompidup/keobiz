@@ -14,6 +14,10 @@ class BalanceSheetRepository {
   async findByClientId(clientId) {
     throw new Error("Not implemented");
   }
+
+  async delete(year, clientId) {
+    throw new Error("Not implemented");
+  }
 }
 
 export default BalanceSheetRepository;
