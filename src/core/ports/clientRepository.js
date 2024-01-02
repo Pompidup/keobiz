@@ -1,13 +1,17 @@
 class ClientRepository {
-  save(client) {
+  async save(client) {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
   }
 
-  getClients() {
+  async getClients() {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
   }
 
-  getById(clientId) {
+  async getById(clientId) {
+    throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
+  }
+
+  async delete(clientId) {
     throw new Error("ERR_METHOD_NOT_IMPLEMENTED");
   }
 }

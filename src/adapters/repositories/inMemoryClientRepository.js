@@ -44,6 +44,13 @@ class InMemoryClientRepository extends ClientRepository {
     client.id = clientData.id;
     return client;
   }
+
+  async delete(clientId) {
+    const index = this.clients.findIndex((client) => client.id === clientId);
+    if (index !== -1) {
+      this.clients.splice(index, 1);
+    }
+  }
 }
 
 export default InMemoryClientRepository;
