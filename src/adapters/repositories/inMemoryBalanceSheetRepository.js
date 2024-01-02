@@ -55,6 +55,15 @@ class InMemoryBalanceSheetRepository extends BalanceSheetRepository {
 
     return balanceSheets;
   }
+
+  async delete(year, clientId) {
+    const index = this.balanceSheets.findIndex(
+      (b) => b.year === year && b.clientId === clientId
+    );
+    if (index !== -1) {
+      this.balanceSheets.splice(index, 1);
+    }
+  }
 }
 
 export default InMemoryBalanceSheetRepository;
