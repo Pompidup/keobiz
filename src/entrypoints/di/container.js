@@ -13,6 +13,7 @@ import CreateBalanceSheet from "../../core/useCases/balanceSheet/create.js";
 import DeleteBalanceSheet from "../../core/useCases/balanceSheet/delete.js";
 import FindBalanceSheet from "../../core/useCases/balanceSheet/find.js";
 import UpdateBalanceSheet from "../../core/useCases/balanceSheet/update.js";
+import pinoLogger from "../../adapters/loggers/pino.js";
 
 const container = createContainer({
   injectionMode: "CLASSIC",
@@ -24,7 +25,7 @@ let sqlClientRepository;
 if (process.env.NODE_ENV === "production") {
   sqlClientRepository = new SqlClientRepository();
   sqlClientRepository.init().then(() => {
-    console.log("SqlClientRepository initialized");
+    pinoLogger.info("SqlClientRepository initialized");
   });
 }
 
