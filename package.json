@@ -5,11 +5,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node src/server.js",
-    "dev": "NODE_ENV=development node src/server.js",
-    "test": "NODE_ENV=test node --test",
-    "test:coverage": "NODE_ENV=test NODE_V8_COVERAGE=coverage  node --test --experimental-test-coverage",
-    "test:watch": "NODE_ENV=test node --test --watch"
+    "start": "NODE_ENV=production node src/index.js",
+    "dev": "NODE_ENV=development node src/index.js",
+    "test": "NODE_ENV=test LOG_LEVEL=silent node --test",
+    "test:coverage": "NODE_ENV=test LOG_LEVEL=silent NODE_V8_COVERAGE=coverage  node --test --experimental-test-coverage",
+    "test:watch": "NODE_ENV=test LOG_LEVEL=silent node --test --watch"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,9 @@
     "awilix": "^9.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "mysql2": "^3.6.5"
+    "mysql2": "^3.6.5",
+    "pino": "^8.17.2",
+    "pino-pretty": "^10.3.1"
   },
   "devDependencies": {
     "@testcontainers/mysql": "^10.4.0"
