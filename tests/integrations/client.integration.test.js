@@ -7,7 +7,6 @@ import {
 import { describe, it, beforeEach, before, after } from "node:test";
 import assert from "node:assert";
 
-import CreateClient from "../../src/core/useCases/client/create.js";
 import container from "../../src/entrypoints/di/container.js";
 
 let sqlClientRepository;
