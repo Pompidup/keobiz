@@ -8,7 +8,7 @@ let container;
 let connection;
 
 export async function startContainer() {
-  container = await new MySqlContainer()
+  container = await new MySqlContainer("mysql:8.0.26")
     .withEnvironment("MYSQL_DATABASE", "keobiz")
     .withRootPassword("rootpassword")
     .start();
