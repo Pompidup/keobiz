@@ -1,12 +1,3 @@
-DROP TABLE IF EXISTS `clients`;
-
-CREATE TABLE `clients` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 LOCK TABLES `clients` WRITE;
 
 INSERT INTO `clients` (`id`, `first_name`, `last_name`)
@@ -39,17 +30,6 @@ VALUES
 	(26,'Anne','David');
 
 UNLOCK TABLES;
-
-DROP TABLE IF EXISTS `balance_sheets`;
-
-CREATE TABLE `balance_sheets` (
-  `year` int(11) NOT NULL,
-  `client_id` int(11) NOT NULL,
-  `result` decimal(10,2) NOT NULL,
-  PRIMARY KEY (`year`,`client_id`),
-  KEY `client_id` (`client_id`),
-  CONSTRAINT `balance_sheets_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `clients` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 LOCK TABLES `balance_sheets` WRITE;
 
@@ -150,4 +130,5 @@ VALUES
 	(2023,23,2710.02),
 	(2023,24,-1475.19),
 	(2023,25,2952.21);
+
 UNLOCK TABLES;

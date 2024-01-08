@@ -1,30 +1,27 @@
-import {
-  startContainer,
-  loadDump,
-  reset,
-  stopContainer,
-} from "../testContainers.js";
 import { describe, it, beforeEach, before, after } from "node:test";
 import assert from "node:assert";
+import DatabaseHelper from "../testContainers.js";
 
 import container from "../../src/entrypoints/di/container.js";
 
 let sqlClientRepository;
 let createClient;
+let database;
 
 before(async () => {
-  await startContainer();
-  await loadDump();
+  database = new DatabaseHelper();
+  await database.startContainer();
+  await database.create();
 });
 
 after(async () => {
-  await stopContainer();
+  await database.stopContainer();
 });
 
 beforeEach(async () => {
   sqlClientRepository = container.resolve("clientRepository");
   createClient = container.resolve("createClient");
-  await reset();
+  await database.reset();
 });
 
 describe("Client integration test", () => {
