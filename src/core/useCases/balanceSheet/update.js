@@ -4,7 +4,8 @@ class UpdateBalanceSheet {
     this.balanceSheetRepository = balanceSheetRepository;
   }
 
-  async execute({ year, clientId, result }) {
+  async execute(params) {
+    const { year, clientId, result } = params;
     const client = await this.clientRepository.getById(clientId);
 
     if (!client) {
@@ -18,6 +19,7 @@ class UpdateBalanceSheet {
     }
 
     balanceSheet.updateResult(result);
+
     await this.balanceSheetRepository.save(balanceSheet);
   }
 }

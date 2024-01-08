@@ -3,6 +3,7 @@ import InMemoryClientRepository from "../../adapters/repositories/inMemoryClient
 import InMemoryBalanceSheetRepository from "../../adapters/repositories/inMemoryBalanceSheetRepository.js";
 import InMemoryClientAggregateRepository from "../../adapters/repositories/inMemoryClientAggregateRepository.js";
 import SqlClientRepository from "../../adapters/repositories/sqlClientRepository.js";
+import SqlBalanceSheetRepository from "../../adapters/repositories/sqlBalanceSheetRepository.js";
 
 import CreateClient from "../../core/useCases/client/create.js";
 import DeleteClient from "../../core/useCases/client/delete.js";
@@ -13,7 +14,7 @@ import CreateBalanceSheet from "../../core/useCases/balanceSheet/create.js";
 import DeleteBalanceSheet from "../../core/useCases/balanceSheet/delete.js";
 import FindBalanceSheet from "../../core/useCases/balanceSheet/find.js";
 import UpdateBalanceSheet from "../../core/useCases/balanceSheet/update.js";
-import pinoLogger from "../../adapters/loggers/pino.js";
+import Database from "../../config/database.js";
 
 const container = createContainer({
   injectionMode: "CLASSIC",
@@ -22,11 +23,14 @@ const container = createContainer({
 // Register dependencies
 
 let sqlClientRepository;
+let sqlBalanceSheetRepository;
 if (process.env.NODE_ENV === "production") {
-  sqlClientRepository = new SqlClientRepository();
-  sqlClientRepository.init().then(() => {
-    pinoLogger.info("SqlClientRepository initialized");
-  });
+  const database = new Database();
+  await database.waitConnection();
+  const connection = await database.getConnection();
+  await database.create();
+  sqlClientRepository = new SqlClientRepository(connection);
+  sqlBalanceSheetRepository = new SqlBalanceSheetRepository(connection);
 }
 
 container.register({
@@ -37,7 +41,7 @@ container.register({
       : asClass(InMemoryClientRepository).singleton(),
   balanceSheetRepository:
     process.env.NODE_ENV === "production"
-      ? asClass(InMemoryBalanceSheetRepository).singleton()
+      ? asValue(sqlBalanceSheetRepository)
       : asClass(InMemoryBalanceSheetRepository).singleton(),
   clientAggregateRepository:
     process.env.NODE_ENV === "production"

@@ -1,5 +1,4 @@
 class BalanceSheet {
-  id;
   year;
   clientId;
   result;
@@ -29,7 +28,9 @@ class BalanceSheet {
 
   static validateYear(value) {
     const currentYear = new Date().getFullYear();
-    return value && value > 2018 && value <= currentYear;
+    return (
+      value && typeof value === "number" && value > 2018 && value <= currentYear
+    );
   }
 
   static validateResult(value) {
