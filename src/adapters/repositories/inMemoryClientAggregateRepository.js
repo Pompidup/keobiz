@@ -3,15 +3,15 @@ import ClientAggregateRepository from "../../core/ports/clientAggregateRepositor
 class InMemoryClientAggregateRepository extends ClientAggregateRepository {
   constructor() {
     super();
-    this.duplicates = [];
+    this.duplicates;
   }
 
-  async setup(results) {
-    this.results = results;
+  async setup(expected) {
+    this.duplicates = expected;
   }
 
   async getDuplicateClients() {
-    return this.results;
+    return this.duplicates;
   }
 }
 

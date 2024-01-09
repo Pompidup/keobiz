@@ -1,17 +1,21 @@
 import { describe, it, beforeEach, before, after } from "node:test";
 import assert from "node:assert";
 import DatabaseHelper from "../testContainers.js";
-
-import container from "../../src/entrypoints/di/container.js";
+import SqlClientRepository from "../../src/adapters/repositories/sqlClientRepository.js";
+import CreateClient from "../../src/core/useCases/client/create.js";
 
 let sqlClientRepository;
 let createClient;
 let database;
+let connection;
 
 before(async () => {
   database = new DatabaseHelper();
   await database.startContainer();
   await database.create();
+  connection = await database.getTestContainerConnection();
+  sqlClientRepository = new SqlClientRepository(connection);
+  createClient = new CreateClient(sqlClientRepository);
 });
 
 after(async () => {
@@ -19,8 +23,6 @@ after(async () => {
 });
 
 beforeEach(async () => {
-  sqlClientRepository = container.resolve("clientRepository");
-  createClient = container.resolve("createClient");
   await database.reset();
 });
 

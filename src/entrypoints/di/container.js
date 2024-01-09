@@ -4,6 +4,7 @@ import InMemoryBalanceSheetRepository from "../../adapters/repositories/inMemory
 import InMemoryClientAggregateRepository from "../../adapters/repositories/inMemoryClientAggregateRepository.js";
 import SqlClientRepository from "../../adapters/repositories/sqlClientRepository.js";
 import SqlBalanceSheetRepository from "../../adapters/repositories/sqlBalanceSheetRepository.js";
+import SqlClientAggregateRepository from "../../adapters/repositories/sqlClientAggregateRepository.js";
 
 import CreateClient from "../../core/useCases/client/create.js";
 import DeleteClient from "../../core/useCases/client/delete.js";
@@ -24,6 +25,7 @@ const container = createContainer({
 
 let sqlClientRepository;
 let sqlBalanceSheetRepository;
+let sqlClientAggregateRepository;
 if (process.env.NODE_ENV === "production") {
   const database = new Database();
   await database.waitConnection();
@@ -31,6 +33,7 @@ if (process.env.NODE_ENV === "production") {
   await database.create();
   sqlClientRepository = new SqlClientRepository(connection);
   sqlBalanceSheetRepository = new SqlBalanceSheetRepository(connection);
+  sqlClientAggregateRepository = new SqlClientAggregateRepository(connection);
 }
 
 container.register({
@@ -45,7 +48,7 @@ container.register({
       : asClass(InMemoryBalanceSheetRepository).singleton(),
   clientAggregateRepository:
     process.env.NODE_ENV === "production"
-      ? asClass(InMemoryClientAggregateRepository).singleton()
+      ? asValue(sqlClientAggregateRepository)
       : asClass(InMemoryClientAggregateRepository).singleton(),
 
   // Use cases
