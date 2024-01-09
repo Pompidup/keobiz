@@ -7,3 +7,6 @@ docker-stop:
 	docker compose down --rmi all
 
 docker-restart: docker-stop docker-start
+
+duplicate:
+	docker compose exec app sh -c "npm run duplicate"

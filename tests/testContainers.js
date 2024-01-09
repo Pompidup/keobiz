@@ -23,6 +23,7 @@ class DatabaseHelper {
       database: this.container.getDatabase(),
       user: "root",
       password: "rootpassword",
+      decimalNumbers: true,
     });
   }
 
@@ -92,6 +93,10 @@ class DatabaseHelper {
       await this.startContainer();
     }
     return this.connection;
+  }
+
+  async execute(query) {
+    return await this.connection.execute(query);
   }
 }
 
