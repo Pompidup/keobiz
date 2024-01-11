@@ -71,6 +71,10 @@ make start
 
 (this will build the docker image and run the container then run the application)
 
+## API Documentation
+
+The API documentation is available at [http://localhost:3000/api-docs](http://localhost:3000/api-docs) when the application is running.
+
 ## Built With
 
 - [Express](https://expressjs.com/) - The web framework used
