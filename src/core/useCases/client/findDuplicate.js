@@ -4,59 +4,52 @@ class FindDuplicate {
   }
 
   async execute() {
-    const aggregates =
-      await this.clientAggregateRepository.getDuplicateClients();
+    const aggregates = await this.clientAggregateRepository.getAll();
 
     if (!aggregates) {
       return [];
     }
 
-    const clients = {};
-
-    for (const aggregate of aggregates) {
-      const key = `${aggregate.first_name} ${aggregate.last_name}`;
-      if (!clients[key]) {
-        clients[key] = [];
+    // Group clients by first and last name
+    const groupedClients = aggregates.reduce((groups, client) => {
+      const key = `${client.first_name} ${client.last_name}`;
+      if (!groups[key]) {
+        groups[key] = [];
       }
-      clients[key].push({
-        year: aggregate.year,
-        result: aggregate.result,
-        id: aggregate.id,
-      });
-    }
+      groups[key].push(client);
+      return groups;
+    }, {});
 
+    // Find duplicates in each group
     const duplicates = [];
-    for (let key in clients) {
-      let yearsResults = clients[key];
-      let sortedYearsResults = yearsResults.sort((a, b) => a.year - b.year);
-      let groupByYear = groupBy(sortedYearsResults, "year");
-      let filteredGroups = Object.values(groupByYear).filter(
-        (group) =>
-          group.length >= 2 &&
-          group.every((item) => item.result === group[0].result)
-      );
-
-      if (filteredGroups.length > 1) {
-        duplicates.push({
-          name: key,
-          ids: [...new Set(filteredGroups.flat().map((item) => item.id))],
-        });
+    for (const [name, group] of Object.entries(groupedClients)) {
+      if (group.length > 1) {
+        for (let i = 0; i < group.length; i++) {
+          for (let j = i + 1; j < group.length; j++) {
+            const commonSheets = group[i].balance_sheets.filter((sheet1) =>
+              group[j].balance_sheets.some(
+                (sheet2) =>
+                  sheet1.year === sheet2.year && sheet1.result === sheet2.result
+              )
+            );
+            if (commonSheets.length >= 2) {
+              const duplicate = duplicates.find((dup) => dup.name === name);
+              if (duplicate) {
+                duplicate.ids.push(group[j].id);
+              } else {
+                duplicates.push({
+                  name: name,
+                  ids: [group[i].id, group[j].id],
+                });
+              }
+            }
+          }
+        }
       }
     }
 
     return duplicates;
   }
-}
-
-function groupBy(array, key) {
-  let result = {};
-  array.forEach((item) => {
-    if (!result[item[key]]) {
-      result[item[key]] = [];
-    }
-    result[item[key]].push(item);
-  });
-  return result;
 }
 
 export default FindDuplicate;

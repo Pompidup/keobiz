@@ -6,12 +6,15 @@ class SqlClientAggregateRepository extends ClientAggregateRepository {
     this.connection = connection;
   }
 
-  async getDuplicateClients() {
+  async getAll() {
     const [rows] = await this.connection.execute(
-      "SELECT c.id, c.first_name, c.last_name, bs.year, bs.result FROM clients AS c LEFT JOIN balance_sheets AS bs ON c.id = bs.client_id"
+      "SELECT c.id, c.first_name, c.last_name, GROUP_CONCAT(CONCAT('{\"year\":',bs.year,',\"result\":',bs.result,'}')) as balance_sheets FROM clients AS c LEFT JOIN balance_sheets AS bs ON c.id = bs.client_id GROUP BY c.id"
     );
 
-    return rows;
+    return rows.map((row) => ({
+      ...row,
+      balance_sheets: JSON.parse(`[${row.balance_sheets}]`),
+    }));
   }
 }
 

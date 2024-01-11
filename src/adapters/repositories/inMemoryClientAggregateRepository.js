@@ -10,7 +10,7 @@ class InMemoryClientAggregateRepository extends ClientAggregateRepository {
     this.duplicates = expected;
   }
 
-  async getDuplicateClients() {
+  async getAll() {
     return this.duplicates;
   }
 }
