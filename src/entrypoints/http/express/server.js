@@ -26,8 +26,6 @@ const options = {
 
 const specs = swaggerJsdoc(options);
 
-console.log(specs);
-
 const createServer = async () => {
   const app = express();
   app.use(express.json());
