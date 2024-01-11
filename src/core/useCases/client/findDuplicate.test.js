@@ -20,36 +20,20 @@ describe("Find Duplicate", () => {
         id: 1,
         first_name: "Pierre",
         last_name: "Bernard",
-        year: 2020,
-        result: 1234,
-      },
-      {
-        id: 1,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2021,
-        result: 556,
-      },
-      {
-        id: 1,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2022,
-        result: 3567,
+        balance_sheets: [
+          { year: 2020, result: 1234 },
+          { year: 2021, result: 556 },
+          { year: 2022, result: 3567 },
+        ],
       },
       {
         id: 2,
         first_name: "Pierre",
         last_name: "Bernard",
-        year: 2020,
-        result: 1234,
-      },
-      {
-        id: 2,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2021,
-        result: 556,
+        balance_sheets: [
+          { year: 2020, result: 1234 },
+          { year: 2021, result: 556 },
+        ],
       },
     ]);
 
@@ -85,50 +69,43 @@ describe("Find Duplicate", () => {
         id: 1,
         first_name: "Pierre",
         last_name: "Bernard",
-        year: 2019,
-        result: 674,
-      },
-      {
-        id: 1,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2020,
-        result: 1234,
-      },
-      {
-        id: 1,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2021,
-        result: 556,
-      },
-      {
-        id: 1,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2022,
-        result: 3567,
-      },
-      {
-        id: 1,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2023,
-        result: 245,
+        balance_sheets: [
+          {
+            year: 2019,
+            result: 674,
+          },
+          {
+            year: 2020,
+            result: 1234,
+          },
+          {
+            year: 2021,
+            result: 556,
+          },
+          {
+            year: 2022,
+            result: 3567,
+          },
+          {
+            year: 2023,
+            result: 245,
+          },
+        ],
       },
       {
         id: 2,
         first_name: "Pierre",
         last_name: "Bernard",
-        year: 2021,
-        result: 4235,
-      },
-      {
-        id: 2,
-        first_name: "Pierre",
-        last_name: "Bernard",
-        year: 2022,
-        result: 3567,
+        balance_sheets: [
+          {
+            year: 2021,
+            result: 4235,
+          },
+          {
+            year: 2022,
+            result: 3567,
+          },
+        ],
       },
     ]);
 

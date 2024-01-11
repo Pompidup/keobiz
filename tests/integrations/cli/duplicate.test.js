@@ -33,7 +33,7 @@ describe("Find duplicate client test", () => {
     const duplicateClients = await findDuplicateClient.execute();
 
     // Assert
-    assert.strictEqual(duplicateClients.length, 2);
+    assert.strictEqual(duplicateClients.length, 3);
     assert.deepStrictEqual(duplicateClients, [
       {
         name: "Pierre Bernard",
@@ -42,6 +42,10 @@ describe("Find duplicate client test", () => {
       {
         name: "Sophie Richard",
         ids: [10, 18],
+      },
+      {
+        name: "Eric Laurent",
+        ids: [15, 21],
       },
     ]);
   });
@@ -61,8 +65,6 @@ describe("Find duplicate client test", () => {
 
     // Act
     const duplicateClients = await findDuplicateClient.execute();
-
-    console.log(duplicateClients);
 
     // Assert
     assert.strictEqual(duplicateClients.length, 0);
